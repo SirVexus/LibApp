@@ -10,7 +10,10 @@ namespace LibApp.Models
     {
         public byte Id { get; set; }
         [Required]
+<<<<<<< Updated upstream
         [StringLength(255)]
+=======
+>>>>>>> Stashed changes
         public string Name { get; set; }
         public short SignUpFee { get; set; }
         public byte DurationInMonths { get; set; }
@@ -18,5 +21,9 @@ namespace LibApp.Models
 
         public static readonly byte Unknown = 0;
         public static readonly byte PayAsYouGo = 1;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     }
 }

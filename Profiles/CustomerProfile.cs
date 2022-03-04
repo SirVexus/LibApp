@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace LibApp.Profiles
 {
+<<<<<<< Updated upstream
     public class CustomerProfile : Profile
+=======
+    public class CustomerProfile : Profile 
+>>>>>>> Stashed changes
     {
         public CustomerProfile()
         {

@@ -5,25 +5,46 @@
 
 <h2>Customers</h2>
 
+<<<<<<< Updated upstream
 <p>
     <a class="btn btn-primary" asp-action="New">New Customer</a>
 </p>
 
+=======
+@if (this.User.IsInRole("Owner"))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="New">New Customer</a>
+    </p>
+}
+>>>>>>> Stashed changes
 
 <table id="customers" class="table table-hover">
     <thead>
         <tr>
             <th>Customer</th>
+<<<<<<< Updated upstream
             <th>Membership Type</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody>
             
+=======
+            <th>Discount Rate</th>
+            @if (this.User.IsInRole("Owner"))
+            {
+                <th>Delete</th>
+            }
+            </tr>
+    </thead>
+    <tbody>
+>>>>>>> Stashed changes
     </tbody>
 </table>
 
 
+<<<<<<< Updated upstream
 @section Scripts 
 { 
     <script>
@@ -60,6 +81,62 @@
             $("#customers").on("click", ".js-delete", function () {
 
                 var button = $(this);
+=======
+@section Scripts
+{
+    @if (this.User.IsInRole("Owner"))
+    {
+        <script>
+            var canDelete = true;
+        </script>
+    }
+    else
+    {
+        <script>
+            var canDelete = false;
+        </script>
+    }
+    <script>
+        $(document).ready(function () {
+            var columnsDef = [
+                {
+                    data: "name",
+                    render: function (data, type, customer) {
+                        return "<a href='customers/details/" + customer.id + "'>" + customer.name + "</a>";
+                    }
+                },
+                {
+                    data: "membershipType.discountRate"
+                }
+            ];
+
+            if (canDelete) {
+                columnsDef.push({
+                    data: "id",
+                    render: function (data) {
+                        return "<button class='btn btn-secondary js-delete' data-customer-id=" + data + ">Delete</button>";
+                    }
+                });
+            }
+
+            $("#customers").DataTable({
+                ajax: {
+                    url: "api/customers/",
+                    dataSrc: ""
+                },
+                columns: columnsDef
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#customers").DataTable();
+
+            $("#customers").on("click", ".js-delete", function () {
+                var button = $(this);
+
+>>>>>>> Stashed changes
                 bootbox.confirm({
                     message: "Confirm customer deletion?",
                     buttons: {
@@ -85,6 +162,10 @@
                     }
                 });
             });
+<<<<<<< Updated upstream
         });
+=======
+        })
+>>>>>>> Stashed changes
     </script>
 }

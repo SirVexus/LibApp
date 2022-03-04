@@ -7,11 +7,18 @@ using LibApp.Models;
 using LibApp.ViewModels;
 using LibApp.Data;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< Updated upstream
+=======
+using Microsoft.AspNetCore.Authorization;
+using LibApp.Interfaces;
+>>>>>>> Stashed changes
 
 namespace LibApp.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
+<<<<<<< Updated upstream
         private readonly ApplicationDbContext _context;
 
         public BooksController(ApplicationDbContext context)
@@ -61,11 +68,53 @@ namespace LibApp.Controllers
             var viewModel = new BookFormViewModel
             {
                 Genres = genres
+=======
+        private readonly IBookRepository repository;
+        private readonly IGenreRepository genreRepository;
+
+        public BooksController(IBookRepository repository, IGenreRepository genreRepository)
+        {
+            this.repository = repository;
+            this.genreRepository = genreRepository;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Details(int id)
+        {
+            var book = repository.GetBookById(id);
+
+            if (book == null)
+            {
+                return Content("Book not found");
+            }
+
+            return View(book);
+        }
+
+        [Authorize(Roles = "Owner,StoreManager")]
+        public IActionResult Edit(int id)
+        {
+            var book = repository.GetBookById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new BookFormViewModel
+            {
+                Book = book,
+                Genres = genreRepository.GetGenres().ToList()
+>>>>>>> Stashed changes
             };
 
             return View("BookForm", viewModel);
         }
 
+<<<<<<< Updated upstream
         [HttpPost]
         public IActionResult Save(Book book)
         {
@@ -95,6 +144,17 @@ namespace LibApp.Controllers
             }
 
             return RedirectToAction("Index", "Books");
+=======
+        [Authorize(Roles = "Owner,StoreManager")]
+        public IActionResult New()
+        {
+            var viewModel = new BookFormViewModel
+            {
+                Genres = genreRepository.GetGenres().ToList()
+            };
+
+            return View("BookForm", viewModel);
+>>>>>>> Stashed changes
         }
     }
 }

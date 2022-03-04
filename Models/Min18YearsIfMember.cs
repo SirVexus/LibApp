@@ -24,8 +24,13 @@ namespace LibApp.Models
 
             var age = DateTime.Today.Year - customer.Birthdate.Value.Year;
 
+<<<<<<< Updated upstream
             return age >= 18 
                 ? ValidationResult.Success : new ValidationResult("Customer should be at least 18 year old to subscribe");
+=======
+
+            return (age >= 18) ? ValidationResult.Success : new ValidationResult("Customer should be at least 18 years old to subscribe");
+>>>>>>> Stashed changes
         }
     }
 }
